@@ -1,22 +1,24 @@
 # coding:utf-8
+import re
+import json
+from datetime import datetime
+import pandas as pd
+import requests
 
-from aip import AipSpeech
+url = 'https://ncov.dxy.cn/ncovh5/view/pneumonia'
 
-""" 你的 APPID AK SK """
-APP_ID = '21732181'
-API_KEY = 'XCQT4EcaOLxCZwvC6xY7ALQh'
-SECRET_KEY = 'sHPAwmEmFdlrp4ibAOmZMWLmQ1SGTFSS'
+page = requests.get(url).content.decode('utf-8')
 
-client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
-s = '皮皮真，你是傻屌'
-result = client.synthesis(s, 'zh', 1, {
-	'vol': 5,  # 音量，取值0-15，默认5中音量
-	'per': 3,
-	'spd': 6,  # 语速，取值0-9，默认为5中语速
-	'pit': 3,  # 音调，取值0-9，默认为5中语调
-})
-print(result)
-# 识别正确返回语音二进制 错误则返回dict 参照下面错误码
-if not isinstance(result, dict):
-	with open('auido.mp3', 'wb') as f:
-		f.write(result)
+regexp = "<script id=\"getListByCountryTypeService2true\">([^<]+)"
+res = re.findall(regexp, page)
+
+data = res[0][48:-11]
+dicts = json.loads(data)
+n_dicts = []
+for row in dicts:
+	for key in row:
+		if key in ['createTime', 'modifyTime']:
+			date_time = datetime.fromtimestamp(row[key] / 1000).strftime("%Y-%m-%d %H:%M:%S")
+			row[key] = date_time
+df = pd.DataFrame(dicts)
+df.to_csv("ncov1.csv", mode="a")
