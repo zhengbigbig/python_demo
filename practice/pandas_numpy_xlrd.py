@@ -24,6 +24,7 @@ print('----------------------')
 # df3 = pd.merge(left=df, right=df2, how='inner', left_on='user_id', right_on='user_id')
 # print(df3)
 # 层次化索引,将列标签当作行索引标签
-df = pd.read_excel('test.xlsx', index_col=[0,1])
+df = pd.read_excel('test.xlsx', index_col=[0, 1])
 print(df)
 print(df.loc['备份操作日志'].loc['修改备份策略'])
+print(df.loc[('备份操作日志', ['修改备份策略']), ['执行情况']])
