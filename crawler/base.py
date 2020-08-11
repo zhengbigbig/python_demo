@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import os
 import time
+from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
 
 os.chdir('/Users/zhengzhiheng/PycharmProjects/untitled3')
 download_path = './douban'
@@ -32,8 +33,17 @@ def main():
 		start_urls.append(f'{base_target}?start={25 * i}&filter=')
 
 	start_time = time.time()
-	for url in start_urls:
-		download_pic(url)
+
+	# for url in start_urls:
+	# 	download_pic(url)
+	with ThreadPoolExecutor(max_workers=10) as executor:
+		futures = []  # 未来得到的结果
+		for url in start_urls:
+			future = executor.submit(download_pic, url)
+			futures.append(future)
+	# 等待所有的线程完成，才执行后面的逻辑
+	wait(futures, return_when=ALL_COMPLETED)
+
 	end_time = time.time()
 	print('-' * 50)
 	print(f'运行时间：{end_time - start_time}')
