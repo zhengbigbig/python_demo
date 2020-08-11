@@ -41,3 +41,4 @@ for i, (index, row) in enumerate(students.iterrows()):
 document.add_picture(imgname)
 document.save('Students.docx')
 print('Done')
+
