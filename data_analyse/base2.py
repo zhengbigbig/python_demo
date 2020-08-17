@@ -18,8 +18,8 @@ data = lc.loc[((lc['专业要求'] == '不限')
                | (lc['专业要求'].str.find('环境保护类') != -1)
                | (lc['专业要求'].str.find('城建规划类') != -1)
                | (lc['专业要求'].str.find('建筑工程类') != -1))
-				 & (lc['性别要求'] == '不限')& (lc['现有身份要求'] == '不限')]
+              & (lc['性别要求'] == '不限') & (lc['现有身份要求'] == '不限')]
 data2 = data.loc[lc['户籍要求'] == '不限']
 print(data)
 data.to_excel('test.xlsx', sheet_name='test', index=True, encoding='utf-8')
-print('招聘类数：{}，满足要求但户籍限制的类数：{}，满足要求无户籍限制类数：{}'.format(lc['专业要求'].count(), data['专业要求'].count(),data2['专业要求'].count()))
+print('招聘类数：{}，满足要求但户籍限制的类数：{}，满足要求无户籍限制类数：{}'.format(lc['专业要求'].count(), data['专业要求'].count(), data2['专业要求'].count()))
