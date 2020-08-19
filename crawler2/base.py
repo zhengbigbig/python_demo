@@ -35,7 +35,7 @@ while True:
 	# json -> dict
 	now_time = r.json()['updated_at']
 	if not old_time:
-		old_time = now_time
+		old_time = now_timesel
 	if old_time < now_time:
 		print('项目更新了')
 		driver = webdriver.Chrome(executable_path=CHROMEDRIVER)
