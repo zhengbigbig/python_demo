@@ -1,4 +1,5 @@
 import requests
+from requests.adapters import HTTPAdapter
 import os
 import json
 import traceback
