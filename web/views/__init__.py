@@ -1,0 +1,1 @@
+from myproject.web.views.index import *

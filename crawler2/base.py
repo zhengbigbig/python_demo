@@ -18,7 +18,7 @@ CHROMEDRIVER = '/Users/zhengzhiheng/PycharmProjects/untitled3/myproject/crawler2
 
 name = 'ant-design/ant-design-pro'
 
-api = 'https://api.github.com/repos/' + name
+api = 'https://apis.github.com/repos/' + name
 weburl = 'https://github.com/' + name
 
 old_time = None
